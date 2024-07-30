@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Web App</title>
+    <!-- Подключение шрифта Montserrat Black из Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: url('webapp/bombf.png') no-repeat center center fixed; /* Используем изображение из папки webapp */
+            background-size: cover;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .button-container {
+            display: flex;
+            gap: 25px; /* Расстояние между кнопками */
+            position: absolute;
+            top: 75%; /* Расположение контейнера с кнопками */
+            transform: translateY(-20%); /* Центрирование по вертикали */
+        }
+        .game-button {
+            display: block;
+            width: 75%;
+            max-width: 200px; /* Максимальная ширина кнопки */
+            padding: 20px; /* Внутренний отступ кнопки */
+            background-color: #063C62;
+            color: #fff;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 22px; /* Размер шрифта */
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            box-shadow: 0px 3px 2px #FFFFFF; /* Добавленная тень */
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Центрирование текста */
+        }
+        .game-button:hover {
+            background-color: #052d48; /* Цвет при наведении */
+        }
+        .square-container {
+            position: absolute;
+            top: 50%; /* Положение прямоугольника по вертикали */
+            left: 50%; /* Положение прямоугольника по горизонтали */
+            transform: translate(-50%, -80%); /* Центрирование по обеим осям */
+            width: 180px; /* Ширина прямоугольника */
+            height: 120px; /* Высота прямоугольника */
+            background-color: #063C62; /* Цвет фона прямоугольника */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 92px; /* Размер шрифта внутри прямоугольника */
+            font-family: 'Montserrat', sans-serif;
+            border-radius: 10px; /* Скругление углов */
+            box-shadow: 0px 2px 1px #FFFFFF; /* Тень прямоугольника */
+            transition: transform 0.3s ease-in-out; /* Плавная анимация */
+        }
+        .square-container.rotate {
+            animation: rotate 0.3s ease-in-out; /* Плавная анимация вращения */
+        }
+        @keyframes rotate {
+            0% {
+                transform: translate(-50%, -80%) rotateY(0deg);
+            }
+            50% {
+                transform: translate(-50%, -80%) rotateY(180deg);
+            }
+            100% {
+                transform: translate(-50%, -80%) rotateY(360deg);
+            }
+        }
+        @media (max-width: 640px) {
+            .game-button {
+                max-width: 45%; /* Максимальная ширина кнопки на мобильных устройствах */
+                font-size: 18px; /* Размер шрифта для мобильных устройств */
+            }
+            .square-container {
+                width: 150px; /* Ширина прямоугольника на мобильных устройствах */
+                height: 180px; /* Высота прямоугольника на мобильных устройствах */
+                font-size: 80px; /* Размер шрифта внутри прямоугольника на мобильных устройствах */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <a href="#" class="game-button" id="action-button-1">GAME HERE</a>
+        <a href="#" class="game-button" id="action-button-2">NEXT</a>
+    </div>
+    <div class="square-container" id="number-square">
+        1 <!-- Начальное значение -->
+    </div>
+    <script>
+        document.getElementById('action-button-1').addEventListener('click', function(event) {
+            event.preventDefault(); // Предотвращает переход по ссылке
+            alert('Button 1 clicked!'); // Действие при нажатии на кнопку 1
+        });
+
+        document.getElementById('action-button-2').addEventListener('click', function(event) {
+            event.preventDefault(); // Предотвращает переход по ссылке
+            const square = document.getElementById('number-square');
+            
+            // Генерация случайного числа от 1 до 3
+            const randomNumber = Math.floor(Math.random() * 3) + 1;
+
+            // Добавление класса для анимации
+            square.classList.add('rotate');
+
+            // Обновление цифры после завершения анимации
+            square.addEventListener('animationend', function() {
+                square.textContent = randomNumber;
+                square.classList.remove('rotate'); // Убирает класс после анимации
+            }, { once: true }); // Слушатель с опцией { once: true } удалится после первого срабатывания
+        });
+    </script>
+</body>
+</html>
